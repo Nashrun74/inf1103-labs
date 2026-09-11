@@ -6,4 +6,8 @@ while True:
     if quantity.lower() == "quit":
         break
 
-    print("Stock quantity entered:", quantity)
+    try:
+        quantity = int(quantity)
+        print("Stock quantity entered: ", quantity)
+    except ValueError:
+        print("Error: Please enter an integer")
