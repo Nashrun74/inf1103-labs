@@ -5,9 +5,10 @@ while True:
 
     if quantity.lower() == "quit":
         break
+        
+    if not quantity.isdigit():
+        print("Error: Please enter a valid integer")
+        continue
 
-    try:
-        quantity = int(quantity)
-        print("Stock quantity entered: ", quantity)
-    except ValueError:
-        print("Error: Please enter an integer")
+    quantity = int(quantity)
+    print("Stock quantity entered: ", quantity)
