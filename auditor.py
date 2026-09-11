@@ -1,14 +1,23 @@
 inventory = 0
 
 while True:
-    quantity = input("Enter stock quantity (or 'quit' to exit): ")
+    stock = input("Enter stock stock (or 'quit' to exit): ")
 
-    if quantity.lower() == "quit":
+    if stock.lower() == "quit":
         break
         
-    if not quantity.isdigit():
+    if not stock.isdigit():
         print("Error: Please enter a valid integer")
         continue
+        
 
-    quantity = int(quantity)
-    print("Stock quantity entered: ", quantity)
+    stock = int(stock)
+    inventory += stock
+
+    if inventory > 500:
+        print("ALERT: Overstock! Inventory exceeds 500 units.")
+        break
+    else:
+        print("Current stock: ", stock)
+
+# print("Final inventory: ", inventory)
