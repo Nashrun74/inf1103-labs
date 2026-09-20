@@ -7,20 +7,20 @@ def get_valid_input():
 
         if not stock.isdigit():
             print("Invalid input! Please enter a positive integer.")
-            failed_attempts += 1
+            # failed_attempts += 1
             continue
         stock = int(stock)
         if stock <= 0:
             print("Invalid input! Stock quantity must be positive.")
-            failed_attempts += 1
+            # failed_attempts += 1
             continue
 
         return stock
 
 
 def process_delivery(current_total, new_value):
-    new_total = current_total + new_value
-    return new_total
+    result = current_total + new_value
+    return result
 
 
 def calculate_tax(amount):
