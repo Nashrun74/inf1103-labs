@@ -1,21 +1,17 @@
+# Functions
 def get_valid_input():
+    failed_attempts = 0
     while True:
         stock = input("Enter stock quantity (or 'quit' to exit): ")
 
         if stock.lower() == "quit":
-            return "quit"
+            return "quit", failed_attempts
 
-        if not stock.isdigit():
-            print("Invalid input! Please enter a positive integer.")
-            # failed_attempts += 1
-            continue
-        stock = int(stock)
-        if stock <= 0:
-            print("Invalid input! Stock quantity must be positive.")
-            # failed_attempts += 1
-            continue
-
-        return stock
+        if stock.isdigit():                                         # Only positive integers
+            return int(stock), failed_attempts
+        
+        print("Invalid input! Please enter a positive integer.")
+        failed_attempts += 1
 
 
 def process_delivery(current_total, new_value):
@@ -40,10 +36,12 @@ total_deliveries = 0
 failed_attempts = 0
 
 while True:
-    result = get_valid_input()
+    result, input_failure = get_valid_input()
+    failed_attempts += input_failure
 
     if result == "quit":
         break
+
 
     # Process the valid delivery
     inventory_total = process_delivery(inventory_total, result)
