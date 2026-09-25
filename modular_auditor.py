@@ -45,7 +45,12 @@ while True:
 
     # Process the valid delivery
     inventory_total = process_delivery(inventory_total, result)
-
+    if inventory_total > 500:
+                print("ALERT: Overstock! Inventory exceeds 500 units.")
+                failed_attempts += 1
+                inventory_total -= result
+                continue
+    
     # Calculate tax for the delivery
     tax = calculate_tax(result)
 
