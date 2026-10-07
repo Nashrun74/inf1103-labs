@@ -88,9 +88,9 @@ def load_inventory():
             {"ID": "P003", "Name": "Keyboard", "Price": 45.00, "Stock": 25},
         ]
 
-# def save_inventory():
-#     with open("Lab5/inventory.json", "w") as file:
-#         json.dump(inventory, file, indent=4)
+def save_inventory():
+    with open("Lab5/inventory.json", "w") as file:
+        json.dump(inventory, file, indent=4)
 
 
 # Main Code
