@@ -1,7 +1,8 @@
 import json
 import os
 
-class Product:          # product class
+# Product class
+class Product:
 
     def __init__(self, product_id, name, price, stock):
         self.__product_id = str(product_id)
@@ -37,7 +38,8 @@ class Product:          # product class
     def get_stock(self):
         return self.__stock
 
-    def to_dict(self):          # converts to dictionary for JSON storage
+    # converts to dictionary for JSON storage
+    def to_dict(self):
         return {
             "ID": self.__product_id,
             "Name": self.__name,
@@ -45,7 +47,8 @@ class Product:          # product class
             "Stock": self.__stock
         }
 
-class Inventory:            # Inventory class
+# Inventory class
+class Inventory:
 
     def __init__(self):
         self.__products = []
@@ -70,7 +73,8 @@ class Inventory:            # Inventory class
     def get_products(self):
         return self.__products
 
-    def load_from_data(self, data):         # convert json dictionaries into product objects
+    # convert json dictionaries into product objects
+    def load_from_data(self, data):
         self.__products = []
         for item in data:
             product = Product(
@@ -78,8 +82,8 @@ class Inventory:            # Inventory class
             )
             self.add_product(product)
 
-
-def load_inventory(inventory, filename="inventory.json"):           # load product from JSON
+# load product from JSON
+def load_inventory(inventory, filename="inventory.json"):
     if os.path.exists(filename):
         print("inventory.json found.")
         try:
@@ -102,7 +106,8 @@ def load_inventory(inventory, filename="inventory.json"):           # load produ
     ])
 
 
-def save_inventory(inventory, filename="inventory.json"):       # save as JSON dictionaries
+# save as JSON dictionaries
+def save_inventory(inventory, filename="inventory.json"):
     folder = os.path.dirname(filename)
     if folder:
         os.makedirs(folder, exist_ok=True)
