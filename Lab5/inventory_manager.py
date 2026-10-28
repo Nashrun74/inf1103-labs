@@ -5,10 +5,10 @@ def display_all():
     print("\nCurrent Inventory\n---------------------------------")
     for i in inventory:
         print(
-            f"ID: {i["ID"]} | "
-            f"Name: {i["Name"]} | "
-            f"Price: ${i["Price"]:.2f} | "
-            f"Stock: {i["Stock"]}"
+            f"ID: {i['ID']} | "
+            f"Name: {i['Name']} | "
+            f"Price: ${i['Price']:.2f} | "
+            f"Stock: {i['Stock']}"
         )
     print("---------------------------------")\
 
@@ -37,8 +37,8 @@ def update_stock():
     for i in inventory:
         if i["ID"] == id:
             print("\nProduct Found: ")
-            print(f"Name: {i["Name"]}")
-            print(f"Current Stock: {i["Stock"]}")
+            print(f"Name: {i['Name']}")
+            print(f"Current Stock: {i['Stock']}")
 
             new_stock = int(input("\nNew Stock Quantity: "))
 
@@ -58,10 +58,10 @@ def search_product():
             print("\nProduct Found")
             print("---------------------------------")
             print(
-                f"ID: {i["ID"]}\n"
-                f"Name: {i["Name"]}\n"
-                f"Price: ${i["Price"]:.2f}\n"
-                f"Stock: {i["Stock"]}"
+                f"ID: {i['ID']}\n"
+                f"Name: {i['Name']}\n"
+                f"Price: ${i['Price']:.2f}\n"
+                f"Stock: {i['Stock']}"
             )
             print("---------------------------------")
             return
@@ -99,7 +99,7 @@ print("=======================================\nINVENTORY MANAGEMENT SYSTEM\n===
 load_inventory()
 print("\n--------------MENU--------------")
 print("1. Display All Products\n2. Add Product\n3. Update Stock\n4. Search Product\n5. Save Inventory\n6. Exit")
-print("--------------------------------\n")
+print("--------------------------------")
 while True:
     option = input("\nEnter option: ")
     if not option.isdigit():
