@@ -1,5 +1,54 @@
 import json
 import os
+
+class Product:
+    """Represent and manage one product."""
+
+    def __init__(self, product_id, name, price, stock):
+        self.__product_id = str(product_id)
+        self.__name = str(name)
+        self.__price = float(price)
+        self.__stock = int(stock)
+
+    def update_stock(self, quantity):
+        """Update the product's stock quantity."""
+        self.__stock = int(quantity)
+
+    def display_information(self):
+        """Display this product's information."""
+        print(
+            f"ID: {self.__product_id}\n"
+            f"Name: {self.__name}\n"
+            f"Price: ${self.__price:.2f}\n"
+            f"Stock: {self.__stock}"
+        )
+
+    def display_summary(self):
+        print(
+            f"ID: {self.__product_id} | "
+            f"Name: {self.__name} | "
+            f"Price: ${self.__price:.2f} | "
+            f"Stock: {self.__stock}"
+        )
+
+    def get_product_id(self):
+        return self.__product_id
+
+    def get_name(self):
+        return self.__name
+
+    def get_stock(self):
+        return self.__stock
+
+    def to_dict(self):
+        """Convert the object to a dictionary for JSON storage."""
+        return {
+            "ID": self.__product_id,
+            "Name": self.__name,
+            "Price": self.__price,
+            "Stock": self.__stock
+        }
+
 # Functions
 def display_all():
     print("\nCurrent Inventory\n---------------------------------")
@@ -10,7 +59,7 @@ def display_all():
             f"Price: ${i['Price']:.2f} | "
             f"Stock: {i['Stock']}"
         )
-    print("---------------------------------")\
+    print("---------------------------------")
 
 def add_product():
     print("\nAdd New Product")
