@@ -1,8 +1,7 @@
 import json
 import os
 
-class Product:
-    """Represent and manage one product."""
+class Product:          # product class
 
     def __init__(self, product_id, name, price, stock):
         self.__product_id = str(product_id)
@@ -11,11 +10,9 @@ class Product:
         self.__stock = int(stock)
 
     def update_stock(self, quantity):
-        """Update the product's stock quantity."""
         self.__stock = int(quantity)
 
     def display_information(self):
-        """Display this product's information."""
         print(
             f"ID: {self.__product_id}\n"
             f"Name: {self.__name}\n"
@@ -40,8 +37,7 @@ class Product:
     def get_stock(self):
         return self.__stock
 
-    def to_dict(self):
-        """Convert the object to a dictionary for JSON storage."""
+    def to_dict(self):          # converts to dictionary for JSON storage
         return {
             "ID": self.__product_id,
             "Name": self.__name,
@@ -49,8 +45,7 @@ class Product:
             "Stock": self.__stock
         }
 
-class Inventory:
-    """Manage a collection of Product objects."""
+class Inventory:            # Inventory class
 
     def __init__(self):
         self.__products = []
@@ -75,8 +70,7 @@ class Inventory:
     def get_products(self):
         return self.__products
 
-    def load_from_data(self, data):
-        """Convert loaded JSON dictionaries into Product objects."""
+    def load_from_data(self, data):         # convert json dictionaries into product objects
         self.__products = []
         for item in data:
             product = Product(
@@ -85,142 +79,171 @@ class Inventory:
             self.add_product(product)
 
 
-# Functions
-def display_all():
-    print("\nCurrent Inventory\n---------------------------------")
-    for i in inventory:
-        print(
-            f"ID: {i['ID']} | "
-            f"Name: {i['Name']} | "
-            f"Price: ${i['Price']:.2f} | "
-            f"Stock: {i['Stock']}"
-        )
-    print("---------------------------------")
-
-def add_product():
-    print("\nAdd New Product")
-    
-    id = input("Product ID: ")
-    name = input("Product Name: ")
-    price = float(input("Price: "))
-    stock = int(input("Stock Quantity: "))
-
-    new_product = {
-        "ID": id,
-        "Name": name,
-        "Price": price,
-        "Stock": stock
-    }
-
-    inventory.append(new_product)
-    print("\nProduct added successfully!")
-
-def update_stock():
-    print("\nUpdate Stock")
-    id = input("Enter Product ID: ")
-
-    for i in inventory:
-        if i["ID"] == id:
-            print("\nProduct Found: ")
-            print(f"Name: {i['Name']}")
-            print(f"Current Stock: {i['Stock']}")
-
-            new_stock = int(input("\nNew Stock Quantity: "))
-
-            i["Stock"] = new_stock
-
-            print("\nStock updated successfully!")
-            return
-
-    print("Product not found.")
-
-def search_product():
-    print("\nSearch Product")
-
-    id = input("Enter Product ID: ")
-    for i in inventory:
-        if i["ID"] == id:
-            print("\nProduct Found")
-            print("---------------------------------")
-            print(
-                f"ID: {i['ID']}\n"
-                f"Name: {i['Name']}\n"
-                f"Price: ${i['Price']:.2f}\n"
-                f"Stock: {i['Stock']}"
-            )
-            print("---------------------------------")
-            return
-
-    print("\nProduct not found.")
-
-def load_inventory():
-    global inventory
-
-    if os.path.exists("Lab5/inventory.json"):
+def load_inventory(inventory, filename="inventory.json"):           # load product from JSON
+    if os.path.exists(filename):
         print("inventory.json found.")
-
-        with open("Lab5/inventory.json", "r") as file:
-            inventory = json.load(file)
-
-        print("Inventory loaded successfully.")
-
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                data = json.load(file)
+            inventory.load_from_data(data)
+            print("Inventory loaded successfully.")
+            return
+        except (json.JSONDecodeError, OSError, KeyError, TypeError, ValueError) as error:
+            print(f"Could not load inventory.json: {error}")
+            print("Starting with pre-filled inventory.")
     else:
         print("inventory.json not found.")
-        print("Starting with pre-filled inventory")
-        inventory = [
-            {"ID": "P001", "Name": "Laptop", "Price": 1200.00, "Stock": 15},
-            {"ID": "P002", "Name": "Mouse", "Price": 25.50, "Stock": 40},
-            {"ID": "P003", "Name": "Keyboard", "Price": 45.00, "Stock": 25},
-        ]
+        print("Starting with pre-filled inventory.")
 
-def save_inventory():
-    with open("Lab5/inventory.json", "w") as file:
-        json.dump(inventory, file, indent=4)
+    inventory.load_from_data([
+        {"ID": "P001", "Name": "Laptop", "Price": 1200.00, "Stock": 15},
+        {"ID": "P002", "Name": "Mouse", "Price": 25.50, "Stock": 40},
+        {"ID": "P003", "Name": "Keyboard", "Price": 45.00, "Stock": 25},
+    ])
 
 
-# Main Code
+def save_inventory(inventory, filename="inventory.json"):       # save as JSON dictionaries
+    folder = os.path.dirname(filename)
+    if folder:
+        os.makedirs(folder, exist_ok=True)
 
-print("=======================================\nINVENTORY MANAGEMENT SYSTEM\n=======================================\n")
-load_inventory()
-print("\n--------------MENU--------------")
-print("1. Display All Products\n2. Add Product\n3. Update Stock\n4. Search Product\n5. Save Inventory\n6. Exit")
-print("--------------------------------")
-while True:
-    option = input("\nEnter option: ")
-    if not option.isdigit():
-        print("Please enter a valid integer")
-        continue
-
-    option = int(option)
-    if option == 1:
-        display_all()
-        continue
-    if option == 2:
-        add_product()
-        continue
-    if option == 3:
-        update_stock()
-        continue
-    if option == 4:
-        search_product()
-        continue
-    if option == 5:
-        save_inventory()
-        print("\nSaving Inventory...")
-        print("Inventory saved successfully to inventory.json.")
-        continue
-    if option == 6:
-        print("\nSaving inventory before exit...")
-        save_inventory()
-        print("Inventory saved successfully.")
-        print("\nThank you for using Inventory Management System\nProgram terminated.")
-        break
-    elif option <= 0 or option > 6:
-        print("Please select a valid option")
-    else:
-        print("Logging off...")
-        break
+    data = [product.to_dict() for product in inventory.get_products()]
+    with open(filename, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
 
 
+def get_integer(prompt):
+    while True:
+        value = input(prompt)
+        try:
+            return int(value)
+        except ValueError:
+            print("Please enter a valid integer.")
 
- 
+
+def get_price(prompt):
+    while True:
+        value = input(prompt)
+        try:
+            price = float(value)
+            if price < 0:
+                print("Price cannot be negative.")
+                continue
+            return price
+        except ValueError:
+            print("Please enter a valid price.")
+
+
+def main():
+    inventory = Inventory()
+
+    print("=======================================\n"
+          "INVENTORY MANAGEMENT SYSTEM\n"
+          "=======================================\n")
+    load_inventory(inventory)
+
+    while True:
+        print("\n--------------MENU--------------")
+        print(
+            "1. Display All Products\n"
+            "2. Add Product\n"
+            "3. Update Stock\n"
+            "4. Search Product\n"
+            "5. Save Inventory\n"
+            "6. Exit"
+        )
+        print("--------------------------------")
+
+        option = input("\nEnter option: ")
+        if not option.isdigit():
+            print("Please enter a valid integer.")
+            continue
+
+        option = int(option)
+
+        if option == 1:
+            inventory.display_all()
+
+        elif option == 2:
+            print("\nAdd New Product")
+            product_id = input("Product ID: ").strip()
+            if not product_id:
+                print("Product ID cannot be empty.")
+                continue
+            if inventory.search_product(product_id) is not None:
+                print("A product with this ID already exists.")
+                continue
+
+            name = input("Product Name: ").strip()
+            if not name:
+                print("Product name cannot be empty.")
+                continue
+
+            price = get_price("Price: ")
+            stock = get_integer("Stock Quantity: ")
+            if stock < 0:
+                print("Stock quantity cannot be negative.")
+                continue
+
+            product = Product(product_id, name, price, stock)
+            inventory.add_product(product)
+            print("\nProduct added successfully!")
+
+        elif option == 3:
+            print("\nUpdate Stock")
+            product_id = input("Enter Product ID: ").strip()
+            product = inventory.search_product(product_id)
+
+            if product is None:
+                print("Product not found.")
+                continue
+
+            print("\nProduct Found:")
+            print(f"Name: {product.get_name()}")
+            print(f"Current Stock: {product.get_stock()}")
+            new_stock = get_integer("\nNew Stock Quantity: ")
+
+            if new_stock < 0:
+                print("Stock quantity cannot be negative.")
+                continue
+
+            product.update_stock(new_stock)
+            print("\nStock updated successfully!")
+
+        elif option == 4:
+            print("\nSearch Product")
+            product_id = input("Enter Product ID: ").strip()
+            product = inventory.search_product(product_id)
+
+            if product is None:
+                print("\nProduct not found.")
+            else:
+                print("\nProduct Found")
+                print("---------------------------------")
+                product.display_information()
+                print("---------------------------------")
+
+        elif option == 5:
+            try:
+                save_inventory(inventory)
+                print("\nInventory saved successfully to inventory.json.")
+            except OSError as error:
+                print(f"Could not save inventory: {error}")
+
+        elif option == 6:
+            print("\nSaving inventory before exit...")
+            try:
+                save_inventory(inventory)
+                print("Inventory saved successfully.")
+            except OSError as error:
+                print(f"Could not save inventory: {error}")
+            print("\nThank you for using Inventory Management System")
+            print("Program terminated.")
+            break
+
+        else:
+            print("Please select a valid option.")
+
+
+if __name__ == "__main__":
+    main()
