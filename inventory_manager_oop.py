@@ -49,6 +49,42 @@ class Product:
             "Stock": self.__stock
         }
 
+class Inventory:
+    """Manage a collection of Product objects."""
+
+    def __init__(self):
+        self.__products = []
+
+    def add_product(self, product):
+        self.__products.append(product)
+
+    def search_product(self, product_id):
+        for product in self.__products:
+            if product.get_product_id() == product_id:
+                return product
+        return None
+
+    def display_all(self):
+        print("\nCurrent Inventory\n---------------------------------")
+        if not self.__products:
+            print("No products in inventory.")
+        for product in self.__products:
+            product.display_summary()
+        print("---------------------------------")
+
+    def get_products(self):
+        return self.__products
+
+    def load_from_data(self, data):
+        """Convert loaded JSON dictionaries into Product objects."""
+        self.__products = []
+        for item in data:
+            product = Product(
+                item["ID"], item["Name"], item["Price"], item["Stock"]
+            )
+            self.add_product(product)
+
+
 # Functions
 def display_all():
     print("\nCurrent Inventory\n---------------------------------")
