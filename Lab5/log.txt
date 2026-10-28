@@ -1,5 +1,0 @@
-0000000000000000000000000000000000000000 c7a66c06c2396a5641355f60f09745a1fda60793 Nash <2602966@sit.singaporetech.edu.sg> 1790581854 +0800	initial pull
-c7a66c06c2396a5641355f60f09745a1fda60793 dc0f88817cd5a783bfb2baee7efbb8641f02b11d Nash <2602966@sit.singaporetech.edu.sg> 1790582056 +0800	commit: push
-dc0f88817cd5a783bfb2baee7efbb8641f02b11d f44565c4927031241941aed4d3fdfa258f9f41ec Nash <2602966@sit.singaporetech.edu.sg> 1791379589 +0800	commit: created dictonary of products and display_all() function
-f44565c4927031241941aed4d3fdfa258f9f41ec b7c0e81c3da9da928904f7a009698db8c08840c5 Nash <2602966@sit.singaporetech.edu.sg> 1791383988 +0800	commit: load_inventory() working
-b7c0e81c3da9da928904f7a009698db8c08840c5 fe0a5b75cd73f3ff6fcb5fd14ef8d42e82c2f7b1 Nash <2602966@sit.singaporetech.edu.sg> 1791384029 +0800	commit: final save_inventory() is verified
