@@ -4,16 +4,12 @@ from abc import ABC, abstractmethod
 
 
 class CanBeShipped(ABC):
-    """Interface-style contract for products that can be shipped."""
-
     @abstractmethod
     def calculate_shipping_cost(self):
         pass
 
 
 class Product(ABC):
-    """Abstract base class shared by physical and digital products."""
-
     def __init__(self, product_id, name, price, stock):
         self.__product_id = str(product_id)
         self.__name = str(name)
@@ -54,12 +50,10 @@ class Product(ABC):
 
     @abstractmethod
     def get_fulfilment_info(self):
-        """Return how this product is fulfilled."""
         pass
 
     @abstractmethod
     def to_dict(self):
-        """Return all product data, including its type, for JSON."""
         pass
 
 
@@ -161,7 +155,7 @@ class Inventory:
         self.__products = products
 
 
-def load_inventory(inventory, filename="Lab7/inventory.json"):
+def load_inventory(inventory, filename="inventory.json"):
     if os.path.exists(filename):
         try:
             with open(filename, "r", encoding="utf-8") as file:
@@ -180,7 +174,7 @@ def load_inventory(inventory, filename="Lab7/inventory.json"):
     ])
 
 
-def save_inventory(inventory, filename="Lab7/inventory.json"):
+def save_inventory(inventory, filename="inventory.json"):
     folder = os.path.dirname(filename)
     if folder:
         os.makedirs(folder, exist_ok=True)
